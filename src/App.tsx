@@ -5,33 +5,33 @@ import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
+import profileReducer from "./redux/Profile-reduce";
+import dialogReducer from "./redux/Dialog-reduce";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 
 const App = (props: any) => {
 
+    return (
+        <BrowserRouter>
+            <div className={'app-wrapper'}>
+                <Header/>
+                <Navbar/>
 
-  return (
-      <BrowserRouter>
-      <div className={'app-wrapper'}>
-      <Header />
-          <Navbar />
+                <div className={'app-wrapper-content'}>
 
-          <div className={'app-wrapper-content'}>
+                    <Route path='/dialogs' render={() =>
+                        <DialogsContainer />}
+                    />
+                    <Route path='/profile' render={() => <Profile
 
-              <Route path='/dialogs' render ={() =>
-                  <Dialogs state={props.state.dialogPage}
-                           store={props.store} />}
-              />
-              <Route path='/profile' render ={() => <Profile
-                  profilePage={props.state.profilePage}
-                  dispatch={props.dispatch}
-                  />}
-              />
+                    />}
+                    />
 
-          </div>
-      </div>
-      </BrowserRouter>
-);
+                </div>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 

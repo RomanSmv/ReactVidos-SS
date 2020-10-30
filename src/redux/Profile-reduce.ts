@@ -1,5 +1,28 @@
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-const ADD_POST = 'ADD-POST';
+import {RootStateType} from "./redux-store";
+
+export type AddPostActionType = {
+    type: "ADD_POST"
+}
+
+export type updateNewPostTextActionType = {
+    type: "UPDATE_NEW_POST_TEXT"
+    newText: string
+}
+
+export type ActionsType = AddPostActionType | updateNewPostTextActionType
+
+export type PostType = {
+    likeCount: number
+    message: string
+    id: number
+}
+
+
+
+export type ProfileStateType = {
+    posts: Array<PostType>
+    newPostText: string
+}
 
 let initialState = {
     posts: [
@@ -11,9 +34,9 @@ let initialState = {
     newPostText: "pipisa"
 }
 
-const profileReducer = (state = initialState, action: any) => {
+const profileReducer = (state: ProfileStateType = initialState, action: ActionsType) => {
     switch(action.type) {
-        case ADD_POST:
+        case "ADD_POST":
         let newPost = {
             id: 5,
             message: state.newPostText,
@@ -22,7 +45,7 @@ const profileReducer = (state = initialState, action: any) => {
         state.posts.push(newPost)
         state.newPostText = ''
             return state
-    case UPDATE_NEW_POST_TEXT:
+    case "UPDATE_NEW_POST_TEXT":
 
 
         state.newPostText = action.newText
@@ -34,13 +57,13 @@ const profileReducer = (state = initialState, action: any) => {
 
 
 }
-export const addPostActionCreator = () => ({
-    type: ADD_POST
+export const addPostActionCreator = (): AddPostActionType => ({
+    type: "ADD_POST"
 
 })
-export const updateNewPostTextActionCreator = (text: string) =>
+export const updateNewPostTextActionCreator = (text: string) :updateNewPostTextActionType =>
 
     ({
-        type: UPDATE_NEW_POST_TEXT, newText: text
+        type: "UPDATE_NEW_POST_TEXT", newText: text
     })
 export default profileReducer;

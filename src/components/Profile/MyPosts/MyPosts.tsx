@@ -13,16 +13,15 @@ const MyPosts = (props: any) => {
 
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
-    let addPost = () => {
-        props.dispatch(addPostActionCreator())
+    let OnAddPost = () => {
+        props.addPost()
+
     }
 
     let onPostChange = () => {
-        if(newPostElement.current){
-        let text = newPostElement.current.value
-        let action = updateNewPostTextActionCreator(text);
-        props.dispatch(action)
-        }
+        let text = newPostElement.current?.value
+            props.updateNewPostText(text)
+
     }
 
     return (
@@ -34,7 +33,7 @@ const MyPosts = (props: any) => {
                 />
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post
+                    <button onClick={OnAddPost}>Add post
                     </button>
                 </div>
             </div>
