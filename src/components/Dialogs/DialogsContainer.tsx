@@ -1,43 +1,28 @@
 import React from "react";
-import s from './Dialogs.module.css';
-import DialogItem from "./DialogItem/DialogItem";
-import Message from "./Message/Message";
-import {sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/Dialog-reduce";
+import {ActionsType, sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/Dialog-reduce";
 import Dialogs from "./Dialogs";
-import StoreContext from "../../StoreContext";
-import {Store} from "redux";
-
-
-type DialogsPropsType = {}
-
-const DialogsContainer = (props: any) => {
+import {connect} from "react-redux";
+import {Dispatch} from "redux";
+import {RootStateType} from "../../redux/redux-store";
+import {Redirect} from "react-router-dom";
+import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 
 
 
-    return (
-        <StoreContext.Consumer>
-            {
-            (store: any) => {
-
-                let state = store.getState().dialogPage
-
-
-                let onSendMessageClick = () => {
-                    store.dispatch(sendMessageCreator())
-                }
-
-                let onNewMessageChange = (body: any) => {
-
-                    store.dispatch(updateNewMessageBodyCreator(body))
-
-                }
-
-
-               return  <Dialogs updateNewMessageBody={onNewMessageChange} sendMessage={onSendMessageClick} dialogPage={state}/>
-            }
-        }
-        </StoreContext.Consumer>
-    )
-
+let mapStateToProps = (state: RootStateType) => {
+    return {
+        dialogsPage: state.dialogPage,
+    }
 }
+
+let mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => {
+    return {
+        sendMessage: () => { dispatch(sendMessageCreator())},
+        updateNewMessageBody: (body: string) => {dispatch( updateNewMessageBodyCreator(body))}
+    }
+}
+
+let AuthRedirectComponent = withAuthRedirect(Dialogs)
+
+let DialogsContainer = connect(mapStateToProps, mapDispatchToProps) (AuthRedirectComponent)
 export default DialogsContainer;

@@ -1,31 +1,39 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header/Header'
 import Navbar from "./components/Navbar/Navbar";
-import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
-import profileReducer from "./redux/Profile-reduce";
-import dialogReducer from "./redux/Dialog-reduce";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-
+import UsersContainer from './users/UsersContainer';
+import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
+import LoginPage from "./components/Login/LoginPage";
 
 const App = (props: any) => {
 
     return (
         <BrowserRouter>
             <div className={'app-wrapper'}>
-                <Header/>
+                <HeaderContainer/>
                 <Navbar/>
 
                 <div className={'app-wrapper-content'}>
 
                     <Route path='/dialogs' render={() =>
-                        <DialogsContainer />}
+                        <DialogsContainer />
+                    }
                     />
-                    <Route path='/profile' render={() => <Profile
+                    <Route path='/profile/:userId?' render={() =>
+                        <ProfileContainer />
+                    }
+                    />
+                    <Route path='/users' render={() =>
+                        <UsersContainer />
+                    }
+                    />
 
-                    />}
+                    <Route path='/login' render={() =>
+                        <LoginPage />
+                    }
                     />
 
                 </div>

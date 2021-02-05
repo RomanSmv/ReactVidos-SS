@@ -1,15 +1,18 @@
 import React from "react";
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/Profile-reduce";
+import {PostType} from "../../../redux/Profile-reduce";
 
-type MyPostsPropsType = {
-
+type PropsType = {
+    posts: Array<PostType>
+    newPostText: string
+    updateNewPostText: (text: string | undefined) => void
+    addPost: () => void
 }
 
 
-const MyPosts = (props: any) => {
-    let postsElements = props.posts.map((p:any)=> <Post message={p.message} likeCount={p.likeCount}/>)
+const MyPosts: React.FC<any> = (props) => {
+    let postsElements = props.posts.map((p: PostType) => <Post message={p.message} likeCount={p.likeCount}/>)
 
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
@@ -20,7 +23,7 @@ const MyPosts = (props: any) => {
 
     let onPostChange = () => {
         let text = newPostElement.current?.value
-            props.updateNewPostText(text)
+        props.updateNewPostText(text)
 
     }
 
