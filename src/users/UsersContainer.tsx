@@ -4,6 +4,7 @@ import {followTC, getUsers, setCurrentPageAC, toggleFollowingProgressAC, unfollo
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
 import {withAuthRedirect} from "../HOC/withAuthRedirect";
+import {compose} from "redux";
 
 
 type PropsType = any
@@ -52,10 +53,10 @@ let mapStateToProps = (state: any) => {
     }
 }
 
-let withRedirect = withAuthRedirect(UsersIPAComponent)
+/*let withRedirect = withAuthRedirect(UsersIPAComponent)*/
 
 
-export default connect(mapStateToProps, {
+/*export default connect(mapStateToProps, {
 
     followSuccess: followTC,
 
@@ -67,4 +68,21 @@ export default connect(mapStateToProps, {
 
     getUsers
 
-})(withRedirect)
+})(withRedirect)*/
+
+export default compose<React.ComponentType>(
+    withAuthRedirect,
+    connect(mapStateToProps, {
+
+        followSuccess: followTC,
+
+        unfollowSuccess: unfollowTC,
+
+        setCurrentPage: setCurrentPageAC,
+
+        toggleFollowingProgress: toggleFollowingProgressAC,
+
+        getUsers
+
+    })
+)(UsersIPAComponent)

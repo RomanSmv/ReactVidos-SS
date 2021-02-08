@@ -2,6 +2,7 @@ import React from "react";
 import s from './ProfileInfo.module.css';
 import Preloader from "../../../common/preloader/Preloader";
 import {PropsType} from "../Profile";
+import ProfileStatus from "./ProfileStatus";
 
 
 const ProfileInfo = (props: PropsType) => {
@@ -12,13 +13,14 @@ const ProfileInfo = (props: PropsType) => {
 
     return (
         <div>
-            <div>
+            {/*<div>
                 <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Quercus_robur_JPG_%28d1%29.jpg/1200px-Quercus_robur_JPG_%28d1%29.jpg' alt="description of image"/>
-            </div>
+            </div>*/}
             <div className={s.descriptionBlock}>
                 {props.profile.photos.large ? <img src={props.profile.photos.large} /> : null}
 
                 {props.profile.fullName}
+                <ProfileStatus status={"hellllo"}/>
             </div>
         </div>
 

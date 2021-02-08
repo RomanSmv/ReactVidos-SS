@@ -6,6 +6,7 @@ import {getUserProfileTC, ProfileType} from "../../redux/Profile-reduce";
 import {RootStateType} from "../../redux/redux-store";
 import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
+import {compose} from "redux";
 
 type MapStateAndMapDispatchPropsType = {
     profile: ProfileType
@@ -28,8 +29,6 @@ class ProfileContainer extends React.Component<PropsType> {
     }
     render() {
 
-        if (!this.props.isAuth ) return <Redirect to ='/login' />
-
         return (
             <div className={s.content}>
                 <Profile {...this.props} profile={this.props.profile}/>
@@ -37,9 +36,6 @@ class ProfileContainer extends React.Component<PropsType> {
         )
     }
 }
-//HOC redirect
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
-
 
 
 let mapStateToProps = (state: RootStateType) => {
@@ -49,6 +45,15 @@ let mapStateToProps = (state: RootStateType) => {
     }
 }
 
-let WithUrlDataContainerComponent: any = withRouter(AuthRedirectComponent)
-//connect создает контейнерную компоненту над этой контейнерной
-export default connect(mapStateToProps, {setUserProfile: getUserProfileTC})(WithUrlDataContainerComponent);
+
+export default compose<React.ComponentType>(
+    withRouter,
+    withAuthRedirect,
+    connect(mapStateToProps, {setUserProfile: getUserProfileTC}),
+)(ProfileContainer)
+
+
+
+
+
+
