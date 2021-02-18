@@ -4,6 +4,7 @@ import dialogReducer from "./Dialog-reduce";
 import usersReducer from "./Users-reduce";
 import authReducer from "./Auth-reduce";
 import thunkMiddleware from "redux-thunk"
+import { reducer as formReducer } from 'redux-form'
 
 export type RootStateType = ReturnType<typeof reducers>
 
@@ -11,7 +12,8 @@ let reducers = combineReducers({
     profilePage: profileReducer,
     dialogPage: dialogReducer,
     usersPage: usersReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
 })
 
 

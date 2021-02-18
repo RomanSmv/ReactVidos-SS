@@ -1,13 +1,10 @@
 import React from "react";
-import {ActionsType, sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/Dialog-reduce";
+import {ActionsType, sendMessageCreator} from "../../redux/Dialog-reduce";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {compose, Dispatch} from "redux";
 import {RootStateType} from "../../redux/redux-store";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
-import {Redirect} from "react-router-dom";
-import s from "../Profile/Profile.module.css";
-import Profile from "../Profile/Profile";
 
 
 let mapStateToProps = (state: RootStateType) => {
@@ -18,20 +15,12 @@ let mapStateToProps = (state: RootStateType) => {
 
 let mapDispatchToProps = (dispatch: Dispatch<ActionsType>) => {
     return {
-        sendMessage: () => { dispatch(sendMessageCreator())},
-        updateNewMessageBody: (body: string) => {dispatch( updateNewMessageBodyCreator(body))}
+        sendMessage: (newMessageBody: string) => {
+            dispatch(sendMessageCreator(newMessageBody))
+        },
+
     }
 }
-
-/*compose(
-    connect(mapStateToProps, mapDispatchToProps) ,
-    withAuthRedirect
-)(Dialogs)
-
-let AuthRedirectComponent = withAuthRedirect(Dialogs)
-
-let DialogsContainer = connect(mapStateToProps, mapDispatchToProps) (AuthRedirectComponent)*/
-
 
 export default compose<React.ComponentType>(
     withAuthRedirect,

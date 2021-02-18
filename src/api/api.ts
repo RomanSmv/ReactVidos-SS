@@ -27,15 +27,31 @@ export const usersAPI = {
         return instance.delete<ApiResponseType>(`follow/${userId}`)
     },
     getProfile(userId: string) {
-        return instance.get<ProfileType>(`profile/` + userId)
+        return profileAPI.getProfile(userId)
     }
 }
+
+export const profileAPI = {
+
+    getProfile(userId: string) {
+        return instance.get<ProfileType>(`profile/` + userId)
+    },
+    getStatus(userId: string) {
+        return instance.get('profile/status/' + userId)
+    },
+    updateStatus(status: string) {
+        return instance.put('profile/status/', {status: status})
+    }
+}
+
 export const authAPI = {
     me() {
         return instance.get(`auth/me`,
             {withCredentials: true})
     }
 }
+
+
 
 //types
 export type ApiResponseType<D = {}> = {
