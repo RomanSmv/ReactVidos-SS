@@ -1,8 +1,8 @@
 import {Dispatch} from "redux";
-import {authAPI} from "../api/api";
+import {authAPI, BaseThunkType} from "../api/api";
+import {FormAction, stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'SET_USER_DATA';
-
 
 
 let initialState = {
@@ -17,29 +17,52 @@ const authReducer = (state = initialState, action: ActionsType) => {
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.data,
+                ...action.payload,
                 isAuth: true
             }
         default:
             return state
     }
 }
-export const setAuthUserData = (id: number, email: string, login: string) => ({
+export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
     type: SET_USER_DATA,
-    data: {id, email, login}
+    payload: {id, email, login, isAuth}
 } as const)
 
 
-export const getAuthUserDataTC = () => (dispatch: Dispatch<ActionsType>) => authAPI.me().then(response => {
-    if (response.data.resultCode === 0) {
-        let {id, email, login} = response.data.data;
-        dispatch(setAuthUserData(id, email, login))
-    }
+export const getAuthUserDataTC = () => (dispatch: Dispatch<ActionsType>) =>
+    authAPI.me().then(response => {
+        if (response.data.resultCode === 0) {
+            let {id, email, login} = response.data.data;
+            dispatch(setAuthUserData(id, email, login, true))
+        }
 
-})
+    })
+
+export const loginTC = (email: string, password: string, rememberMe: boolean): ThunkType => (dispatch) =>
+    authAPI.login(email, password, rememberMe).then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(getAuthUserDataTC())
+        } else {
+            let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
+            dispatch(stopSubmit("login", {_error: message}))
+        }
+
+    })
+export const logoutTC = () => (dispatch: Dispatch<ActionsType>) =>
+    authAPI.logout().then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(setAuthUserData(null, null, null, false))
+        }
+
+    })
+
 export default authReducer;
 
 //types
 
 type ActionsType =
     | ReturnType<typeof setAuthUserData>
+
+type ThunkType = BaseThunkType<ActionsType
+    | FormAction>

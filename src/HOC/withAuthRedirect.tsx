@@ -11,7 +11,7 @@ let mapStateToPropsForRedirect = (state: RootStateType) => {
 export const withAuthRedirect = (Component: React.ComponentType<any>) => {
     class RedirectComponent extends React.Component<{ isAuth: boolean }> {
         render() {
-            debugger
+
             if (!this.props.isAuth) {
                 return <Redirect to='/login'/>
             } else {
