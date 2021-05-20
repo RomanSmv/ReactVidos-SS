@@ -5,6 +5,12 @@ import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
 import {withAuthRedirect} from "../HOC/withAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPageSelector, getFollowingInProgress, getIsFetchingSelector,
+    getPagesSizeSelector,
+    getTotalUsersCountSelector,
+    getUsersSelector
+} from "../redux/Users-selectors";
 
 
 type PropsType = any
@@ -42,7 +48,7 @@ class UsersIPAComponent extends React.Component<PropsType> {
     }
 }
 
-let mapStateToProps = (state: any) => {
+/*let mapStateToProps = (state: any) => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
@@ -51,24 +57,18 @@ let mapStateToProps = (state: any) => {
         isFetching: state.usersPage.isFetching,
         followingInProgress: state.usersPage.followingInProgress,
     }
+}*/
+let mapStateToProps = (state: any) => {
+    return {
+        users: getUsersSelector(state),
+        pageSize: getPagesSizeSelector(state),
+        totalUsersCount: getTotalUsersCountSelector(state),
+        currentPage: getCurrentPageSelector(state),
+        isFetching: getIsFetchingSelector(state),
+        followingInProgress: getFollowingInProgress(state),
+    }
 }
 
-/*let withRedirect = withAuthRedirect(UsersIPAComponent)*/
-
-
-/*export default connect(mapStateToProps, {
-
-    followSuccess: followTC,
-
-    unfollowSuccess: unfollowTC,
-
-    setCurrentPage: setCurrentPageAC,
-
-    toggleFollowingProgress: toggleFollowingProgressAC,
-
-    getUsers
-
-})(withRedirect)*/
 
 export default compose<React.ComponentType>(
     withAuthRedirect,

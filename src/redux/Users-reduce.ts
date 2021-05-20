@@ -88,6 +88,7 @@ export const getUsers = (currentPage: number, pageSize: number) => {
 
     return (dispatch: Dispatch<ActionsType>) => {
         dispatch(toggleIsFetchingAC(true))
+        dispatch(setCurrentPageAC(currentPage))
         usersAPI.getUsers(currentPage, pageSize)
             .then(data => {
                 //отключает крутилку

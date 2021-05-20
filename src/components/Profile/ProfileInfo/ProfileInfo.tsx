@@ -2,7 +2,7 @@ import React from "react";
 import s from './ProfileInfo.module.css';
 import Preloader from "../../../common/preloader/Preloader";
 import {PropsType} from "../Profile";
-import ProfileStatus from "./ProfileStatus";
+import ProfileStatusHooks from "./ProfileStatusHooks";
 
 
 const ProfileInfo = (props: PropsType) => {
@@ -20,7 +20,7 @@ const ProfileInfo = (props: PropsType) => {
                 {props.profile.photos.large ? <img src={props.profile.photos.large} /> : null}
 
                 {props.profile.fullName}
-                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+                <ProfileStatusHooks status={props.status} updateStatus={props.updateStatus}/>
             </div>
         </div>
 
