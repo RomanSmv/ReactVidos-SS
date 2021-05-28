@@ -6,7 +6,7 @@ let initialState = {
     posts: [
         {likeCount: 18, message: 'Hi, how are you ', id: 1},
         {likeCount: 85, message: 'It is my first post', id: 2}
-    ] as Array<PostType> ,
+    ] as Array<PostType>,
 
     profile: null as null | ProfileType,
     status: '',
@@ -36,6 +36,12 @@ const profileReducer = (state = initialState, action: ActionsType) => {
                 ...state,
                 status: action.status
             }
+        case "DELETE_POST":
+            return {
+                ...state,
+                posts: state.posts.filter(p => p.id != action.postId)
+            }
+
         default:
             return state
 
@@ -46,25 +52,24 @@ const profileReducer = (state = initialState, action: ActionsType) => {
 export const addPostActionCreator = (newPostText: string) => ({type: "ADD_POST", newPostText} as const)
 export const setUserProfileActionCreator = (profile: ProfileType) => ({type: "SET_USER_PROFILE", profile} as const)
 export const setStatusActionCreator = (status: string) => ({type: "SET_STATUS", status} as const)
+export const deletePostActionCreator = (postId: number) => ({type: "DELETE_POST", postId} as const)
 
-export const getUserProfileTC = (userId: string) => (dispatch: Dispatch<ActionsType>) => {
-    usersAPI.getProfile(userId).then(response => {
-        dispatch(setUserProfileActionCreator(response.data))
-    })
+export const getUserProfileTC = (userId: string) => async (dispatch: Dispatch<ActionsType>) => {
+    let response = await usersAPI.getProfile(userId)
+    dispatch(setUserProfileActionCreator(response.data))
+
 }
-export const getStatusTC = (userId: string) => (dispatch: Dispatch<ActionsType>) => {
-    profileAPI.getStatus(userId).then(response => {
-        dispatch(setStatusActionCreator(response.data))
-    })
+export const getStatusTC = (userId: string) => async (dispatch: Dispatch<ActionsType>) => {
+    let response = await profileAPI.getStatus(userId)
+    dispatch(setStatusActionCreator(response.data))
+
 }
 
-export const updateStatusTC = (status: string) => (dispatch: Dispatch<ActionsType>) => {
-    profileAPI.updateStatus(status).then(response => {
-        if (response.data.resultCode === 0) {
-            dispatch(setStatusActionCreator(status))
-        }
-
-    })
+export const updateStatusTC = (status: string) => async (dispatch: Dispatch<ActionsType>) => {
+    let response = await profileAPI.updateStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setStatusActionCreator(status))
+    }
 }
 
 //types
@@ -72,6 +77,7 @@ export type ActionsType =
     | ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof setUserProfileActionCreator>
     | ReturnType<typeof setStatusActionCreator>
+    | ReturnType<typeof deletePostActionCreator>
 
 export type PostType = {
     likeCount: number

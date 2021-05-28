@@ -86,45 +86,40 @@ export const toggleFollowingProgressAC = (isFetching: boolean, userId: number) =
 
 export const getUsers = (currentPage: number, pageSize: number) => {
 
-    return (dispatch: Dispatch<ActionsType>) => {
+    return async (dispatch: Dispatch<ActionsType>) => {
         dispatch(toggleIsFetchingAC(true))
         dispatch(setCurrentPageAC(currentPage))
-        usersAPI.getUsers(currentPage, pageSize)
-            .then(data => {
-                //отключает крутилку
-                dispatch(toggleIsFetchingAC(false))
-                dispatch(setUsersAC(data.items))
-                dispatch(setTotalUsersCountAC(data.totalCount))
-            })
+        let data = await usersAPI.getUsers(currentPage, pageSize)
+        //отключает крутилку
+        dispatch(toggleIsFetchingAC(false))
+        dispatch(setUsersAC(data.items))
+        dispatch(setTotalUsersCountAC(data.totalCount))
+
     }
 }
 export const followTC = (userId: number) => {
 
-    return (dispatch: Dispatch<ActionsType>) => {
+    return async (dispatch: Dispatch<ActionsType>) => {
         dispatch(toggleFollowingProgressAC(true, userId))
-        usersAPI.follow(userId)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(followAC(userId))
-                }
-                //кнопка подписки
-                dispatch(toggleFollowingProgressAC(false, userId))
-            })
+        let response = await usersAPI.follow(userId)
+        if (response.data.resultCode === 0) {
+            dispatch(followAC(userId))
+        }
+        //кнопка подписки
+        dispatch(toggleFollowingProgressAC(false, userId))
     }
 }
 
 export const unfollowTC = (userId: number) => {
 
-    return (dispatch: Dispatch<ActionsType>) => {
+    return async (dispatch: Dispatch<ActionsType>) => {
         dispatch(toggleFollowingProgressAC(true, userId))
-        usersAPI.unfollow(userId)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(unFollowAC(userId))
-                }
-                //кнопка подписки
-                dispatch(toggleFollowingProgressAC(false, userId))
-            })
+        let response = await usersAPI.unfollow(userId)
+        if (response.data.resultCode === 0) {
+            dispatch(unFollowAC(userId))
+        }
+        //кнопка подписки
+        dispatch(toggleFollowingProgressAC(false, userId))
     }
 }
 

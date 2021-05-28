@@ -14,7 +14,7 @@ type PropsType = {
 
 const maxLength10 = maxLengthCreator(10)
 
-const MyPosts: React.FC<PropsType> = (props) => {
+const MyPosts = React.memo((props: PropsType) => {
     let postsElements = props.posts.map((p: PostType) => <Post message={p.message} likeCount={p.likeCount}/>)
 
     let newPostElement = React.createRef<HTMLTextAreaElement>()
@@ -35,6 +35,7 @@ const MyPosts: React.FC<PropsType> = (props) => {
         </div>
     )
 }
+)
 type FormPropsType = {}
 type FormValueType = { newPostText: string }
 const AddNewPostForm: FC<InjectedFormProps<FormValueType, FormPropsType> & FormPropsType> = (props) => {
