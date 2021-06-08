@@ -1,6 +1,5 @@
-import {BaseThunkType, usersAPI, UserType} from "../api/api";
+import {usersAPI, UserType} from "../api/api";
 import {Dispatch} from "redux";
-import {RootStateType} from "./redux-store";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';

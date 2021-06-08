@@ -1,3 +1,17 @@
 .selectedPage {
     font-weight: bolder;
 }
+
+.page {
+    cursor: pointer;
+    padding: 2px;
+    border: 1px solid gray;
+}
+
+.selectedPage {
+    font-weight: bold;
+    color: #d6b776;
+    padding: 2px;
+    border: 1px solid gray;
+    background-color: #000;
+}
