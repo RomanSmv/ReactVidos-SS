@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/ReactVidos-SS/static/css/main.bcb31d64.chunk.css",
+    "main.js": "/ReactVidos-SS/static/js/main.fd179d90.chunk.js",
+    "main.js.map": "/ReactVidos-SS/static/js/main.fd179d90.chunk.js.map",
+    "runtime-main.js": "/ReactVidos-SS/static/js/runtime-main.cfd24e9c.js",
+    "runtime-main.js.map": "/ReactVidos-SS/static/js/runtime-main.cfd24e9c.js.map",
+    "static/js/2.b6d7b430.chunk.js": "/ReactVidos-SS/static/js/2.b6d7b430.chunk.js",
+    "static/js/2.b6d7b430.chunk.js.map": "/ReactVidos-SS/static/js/2.b6d7b430.chunk.js.map",
+    "index.html": "/ReactVidos-SS/index.html",
+    "precache-manifest.e5554971ec691ec618fd4e50936e69a2.js": "/ReactVidos-SS/precache-manifest.e5554971ec691ec618fd4e50936e69a2.js",
+    "service-worker.js": "/ReactVidos-SS/service-worker.js",
+    "static/css/main.bcb31d64.chunk.css.map": "/ReactVidos-SS/static/css/main.bcb31d64.chunk.css.map",
+    "static/js/2.b6d7b430.chunk.js.LICENSE.txt": "/ReactVidos-SS/static/js/2.b6d7b430.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cfd24e9c.js",
+    "static/js/2.b6d7b430.chunk.js",
+    "static/css/main.bcb31d64.chunk.css",
+    "static/js/main.fd179d90.chunk.js"
+  ]
+}
